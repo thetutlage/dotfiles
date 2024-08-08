@@ -118,3 +118,68 @@ alias list="eza --group-directories-first --git-ignore"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+alias showUpstream="git status --short --branch --porcelain=2"
+alias npr="git ch master && git rebase develop && npm run release"
+alias nprm="git ch main && git rebase develop && npm run release"
+alias srl="git ch develop && git rebase master && git gpr"
+alias srlm="git ch develop && git rebase main && git gpr"
+alias npmu="ncu -i"
+alias commit='git commit'
+alias cud='git commit -m "chore: update dependencies" && npm run test && npm run build'
+alias style='git commit -m "style: fix source formatting"'
+alias amend='git commit --amend --no-edit'
+alias deps="cat package.json| fx .dependencies"
+alias exports="cat package.json| fx .exports"
+alias exportsNames="cat package.json| fx .exports 'Object.keys'"
+alias ddeps="cat package.json| fx .devDependencies"
+alias pdeps="cat package.json| fx .peerDependencies"
+alias pkg="cat package.json| fx"
+alias vdeps="pdeps && ddeps | grep \"\$(pdeps)\""
+
+alias cpwd="pwd | pbCopy"
+alias tnode="node --no-warnings --enable-source-maps --loader=ts-node/esm --experimental-import-meta-resolve"
+alias ace="node ace"
+
+function setUpstream {
+    if [[ $# = 0 ]]
+    then
+        echo "Define origin branch"
+    else
+    git branch -u $1
+  fi
+}
+
+
+openRepo() {
+  githubDomain="https://github.com/"
+  remoteUrl="$(git config --get remote.origin.url)"
+  branch="$(git rev-parse --abbrev-ref HEAD)"
+
+  # Replace git protocol with github domain
+  remoteUrl="${remoteUrl/git\@github\.com\:/$githubDomain}"
+
+  # Replace `.git` suffix
+  remoteUrl="${remoteUrl/.git/}"
+
+  # Open URL and append current branch name
+  open "${remoteUrl}/tree/${branch}"
+}
+
+alias grb="git branch -vv | grep ': gone]'|  grep -v \"\*\" | awk '{ print $1; }' | xargs -r git branch -d"
+alias grbf="git branch -vv | grep ': gone]'|  grep -v \"\*\" | awk '{ print $1; }' | xargs -r git branch -D"
+
+alias update="git pull --rebase && npm-check -u"
+alias clc="git ls-files | xargs cat | wc -l"
+
+alias tt="npm run test"
+alias qt="npm run vscode:test"
+
+ct() {
+  testTitle="$(pbpaste)"
+  echo "Running test \"${testTitle}\""
+  npm run quick:test -- --tests="${testTitle}"
+}
+
+ft() {
+  npm run quick:test -- --failed
+}
