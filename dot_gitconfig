@@ -1,0 +1,12 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Harminder Virk
+	email = virk.officials@gmail.com
+[commit]
+	gpgsign = true
+[alias]
+	ch=checkout
+	gpr=push
+	st=status
+[init]
+	defaultbranch=main
