@@ -137,7 +137,7 @@ alias pkg="cat package.json| fx"
 alias vdeps="pdeps && ddeps | grep \"\$(pdeps)\""
 
 alias cpwd="pwd | pbCopy"
-alias tnode="node --no-warnings --enable-source-maps --loader=ts-node/esm --experimental-import-meta-resolve"
+alias tnode="node --no-warnings --enable-source-maps --import=ts-node-maintained/register/esm"
 alias ace="node ace"
 
 function setUpstream {
